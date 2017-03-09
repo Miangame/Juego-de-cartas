@@ -3,6 +3,7 @@ package juegoDeCartas;
 import java.util.ArrayList;
 
 import utiles.Menu;
+import utiles.Teclado;
 import utiles.Utilidades;
 
 public class TestJuegoDeCartas {
@@ -197,16 +198,12 @@ public class TestJuegoDeCartas {
 	 * @throws AliasYaExisteException
 	 */
 	private static void annadirJugador() throws AliasYaExisteException {
-		/*
-		 * String cadena = Teclado.leerCadena("\nIntroduzca un alias: "); if
-		 * (jugadoresTotales.contains(new Jugador(cadena))) throw new
-		 * AliasYaExisteException("Ese alias ya existe");
-		 */
 
-		jugadoresTotales.add(new Jugador("Miangame"));
-		jugadoresTotales.add(new Jugador("Paalve"));
-		jugadoresTotales.add(new Jugador("Oschertar"));
-		// jugadoresTotales.add(new Jugador(cadena));
+		String cadena = Teclado.leerCadena("\nIntroduzca un alias: ");
+		if (jugadoresTotales.contains(new Jugador(cadena)))
+			throw new AliasYaExisteException("Ese alias ya existe");
+
+		jugadoresTotales.add(new Jugador(cadena));
 		System.out.println("\nJugador añadido correctamente.");
 
 	}
