@@ -36,7 +36,6 @@ public class Baraja {
 	public Carta sacarCarta() throws CartasAcabadasException {
 		if (baraja.isEmpty())
 			throw new CartasAcabadasException("Se han acabado las cartas");
-		System.out.println(baraja.size());
 		return baraja.remove(0);
 	}
 

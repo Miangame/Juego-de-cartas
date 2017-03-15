@@ -1,6 +1,7 @@
 package juegoDeCartas;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import utiles.Menu;
 import utiles.Teclado;
@@ -89,8 +90,7 @@ public class TestJuegoDeCartas {
 				return;
 
 			case 2:
-				Ranking ranking = new Ranking(jugadoresTotales);
-				System.out.println(ranking.toString());
+				ranking();
 				return;
 
 			case 3:
@@ -101,6 +101,18 @@ public class TestJuegoDeCartas {
 				return;
 			}
 		} while (opcion != 4);
+	}
+
+	/**
+	 * Muestra el ranking de jugadores ordenado por partidas ganadas
+	 */
+	private static void ranking() {
+		Collections.sort(jugadoresTotales);
+		int i = 1;
+		for (Jugador jugador : jugadoresTotales) {
+			System.out.println("\n\t" + i + ". " + jugador);
+			i++;
+		}
 	}
 
 	/**

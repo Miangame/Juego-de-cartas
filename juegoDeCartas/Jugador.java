@@ -6,7 +6,7 @@ package juegoDeCartas;
  * @author Miguel Ángel Gavilán Merino
  *
  */
-public class Jugador {
+public class Jugador implements Comparable<Jugador> {
 	/**
 	 * Alias del jugador
 	 */
@@ -87,6 +87,11 @@ public class Jugador {
 		} else if (!alias.equalsIgnoreCase(other.alias))
 			return false;
 		return true;
+	}
+
+	public int compareTo(Jugador jugador) {
+		int comparepg = ((Jugador) jugador).getPartidasGanadas();
+		return comparepg - this.partidasGanadas;
 	}
 
 	@Override
