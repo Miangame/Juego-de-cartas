@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import utiles.Menu;
-import utiles.Teclado;
+import utiles.TecladoScanner;
 import utiles.Utilidades;
 
 public class TestJuegoDeCartas {
@@ -211,7 +211,7 @@ public class TestJuegoDeCartas {
 	 */
 	private static void annadirJugador() throws AliasYaExisteException {
 
-		String cadena = Teclado.leerCadena("\nIntroduzca un alias: ");
+		String cadena = TecladoScanner.leerCadena("\nIntroduzca un alias: ");
 		if (jugadoresTotales.contains(new Jugador(cadena)))
 			throw new AliasYaExisteException("Ese alias ya existe");
 

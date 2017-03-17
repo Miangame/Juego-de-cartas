@@ -22,7 +22,9 @@ public class Baraja {
 				baraja.add(new Carta(palo, figura));
 			}
 		}
+	}
 
+	public void barajar() {
 		Collections.shuffle(baraja); // Baraja las cartas
 	}
 

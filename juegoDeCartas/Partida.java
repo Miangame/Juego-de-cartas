@@ -32,6 +32,7 @@ public class Partida {
 	 *             Cuando se han acabado las cartas
 	 */
 	public void jugar() throws CartasAcabadasException {
+		baraja.barajar();
 		incPartidas(); // Se incrementan las partidas jugadas
 		Jugador ganador = null;
 		for (Jugador jugador : jugadores) {
