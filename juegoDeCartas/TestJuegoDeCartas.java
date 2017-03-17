@@ -1,17 +1,11 @@
 package juegoDeCartas;
 
 import java.util.ArrayList;
-import java.util.Collections;
-
 import utiles.Menu;
 import utiles.TecladoScanner;
 import utiles.Utilidades;
 
 public class TestJuegoDeCartas {
-	// PPAL: jugadores, jugar
-	// jugadores: alta, mostrar RANKING, baja
-	// jugar: menu de todos los jugadores (al menos 2 jugadoresPartida) new
-	// Partida(jugadoresPartida)
 	/**
 	 * Opciones para el menú principal
 	 */
@@ -50,7 +44,7 @@ public class TestJuegoDeCartas {
 	/**
 	 * Array con todos los jugadores
 	 */
-	static ArrayList<Jugador> jugadoresTotales = new ArrayList<Jugador>();
+	static Jugadores jugadoresTotales = new Jugadores();
 
 	public static void main(String[] args) {
 		int opcion;
@@ -90,11 +84,15 @@ public class TestJuegoDeCartas {
 				return;
 
 			case 2:
-				ranking();
+				try {
+					System.out.println(jugadoresTotales.ranking());
+				} catch (JugadorNoExisteException e) {
+					System.err.println(e.getMessage());
+				}
 				return;
 
 			case 3:
-				jugadoresTotales.remove(listarJugadores("\n---Escoja el jugador que desea eliminar---"));
+				eliminarJugador();
 				return;
 
 			default:
@@ -104,14 +102,13 @@ public class TestJuegoDeCartas {
 	}
 
 	/**
-	 * Muestra el ranking de jugadores ordenado por partidas ganadas
+	 * Elimina a un jugador de la lista
 	 */
-	private static void ranking() {
-		Collections.sort(jugadoresTotales);
-		int i = 1;
-		for (Jugador jugador : jugadoresTotales) {
-			System.out.println("\n\t" + i + ". " + jugador);
-			i++;
+	public static void eliminarJugador() {
+		try {
+			jugadoresTotales.eliminar(jugadoresTotales.listarJugadores("\n---Escoja el jugador que desea eliminar---"));
+		} catch (JugadorNoExisteException e) {
+			System.err.println(e.getMessage());
 		}
 	}
 
@@ -173,20 +170,10 @@ public class TestJuegoDeCartas {
 									// haya mínimo 2
 		int i = 0;
 		do {
-			numJugador = listarJugadores("\n---Escoja los jugadores que van a  participar (mínimo 2)---"); // Muestra
-																											// una
-																											// lista
-																											// con
-																											// todos
-																											// los
-			// jugadores y devuelve el
-			// seleccionado
-			if (participantes.contains(new Jugador(jugadoresTotales.get(numJugador - 1).getAlias()))) { // El
-																										// jugador
-																										// ya
-																										// ha
-																										// sido
-																										// seleccionado
+			numJugador = jugadoresTotales
+					.listarJugadores("\n---Escoja los jugadores que van a  participar (mínimo 2)---");
+
+			if (participantes.contains(new Jugador(jugadoresTotales.get(numJugador - 1).getAlias()))) {
 				System.out.println("\nEse jugador ya va a jugar");
 			} else { // El jugador se añade a la lista
 				participantes.add(jugadoresTotales.get(numJugador - 1));
@@ -212,33 +199,9 @@ public class TestJuegoDeCartas {
 	private static void annadirJugador() throws AliasYaExisteException {
 
 		String cadena = TecladoScanner.leerCadena("\nIntroduzca un alias: ");
-		if (jugadoresTotales.contains(new Jugador(cadena)))
-			throw new AliasYaExisteException("Ese alias ya existe");
-
-		jugadoresTotales.add(new Jugador(cadena));
+		jugadoresTotales.annadirJugador(cadena);
 		System.out.println("\nJugador añadido correctamente.");
 
-	}
-
-	/**
-	 * Muestra todos los jugadores y devuelve el seleccionado
-	 * 
-	 * @return Jugador seleccionado
-	 */
-	private static int listarJugadores(String msg) {
-		if (jugadoresTotales.isEmpty()) {
-			System.out.println("\nNo existen jugadores");
-			return -1;
-		}
-
-		int i = 0;
-		String[] opcionesJugadoresTotales = new String[jugadoresTotales.size()];
-		for (Jugador jugador : jugadoresTotales) {
-			opcionesJugadoresTotales[i] = jugador.toString();
-			i++;
-		}
-		Menu menuJugadoresTotales = new Menu(msg, opcionesJugadoresTotales);
-		return menuJugadoresTotales.gestionar();
 	}
 
 }
